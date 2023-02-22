@@ -1,0 +1,9 @@
+{
+    "TOKEN"  :"",
+    "SPOTIFY": {
+        "CLIENT_ID"    :"",
+        "CLIENT_SECRET":"",
+        "EMOJI"        :"<:App_logo_spotify_white:1007559242984734720>"
+    },
+    "ADMINS":[]
+}
