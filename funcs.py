@@ -48,8 +48,8 @@ class SpotifyView(discord.ui.View):
 
 
 class SpotifySelect(discord.ui.Select):
-    def __init__(self, placeholder: str, options: list[discord.SelectOption], disabled: bool = False, max_values=None):
-        super().__init__(placeholder=placeholder, options=options, disabled=disabled, max_values=max_values)
+    def __init__(self, placeholder: str, options: list[discord.SelectOption], disabled: bool = False):
+        super().__init__(placeholder=placeholder, options=options, disabled=disabled)
 
     async def callback(self, inter:discord.Interaction):
         song = self.values
@@ -60,9 +60,9 @@ class SpotifySelect(discord.ui.Select):
 
 
 class SpotifySelectView(discord.ui.View):
-    def __init__(self, placeholder, option, max, timeout: float = 180, disable_on_timeout: bool = True):
+    def __init__(self, placeholder, option, timeout: float = 180, disable_on_timeout: bool = True):
         super().__init__(timeout=timeout, disable_on_timeout=disable_on_timeout)
-        self.add_item(SpotifySelect(placeholder=placeholder, options=option, max_values=max))
+        self.add_item(SpotifySelect(placeholder=placeholder, options=option))
 
 
 
