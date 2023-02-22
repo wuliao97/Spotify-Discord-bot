@@ -4,6 +4,7 @@
         "CLIENT_ID"    :"",
         "CLIENT_SECRET":"",
         "EMOJI"        :"<:App_logo_spotify_white:1007559242984734720>"
+        "JUMP_EMOJI"   : "<:Icon_jumptourl:1007535375033581588>"   
     },
     "ADMINS":[]
 }
