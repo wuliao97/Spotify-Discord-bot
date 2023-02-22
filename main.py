@@ -70,7 +70,7 @@ async def send_user_avatar(
 
     e = discord.Embed(
         description = "%s's Avatar\n\n> **[URL](%s)**" % (user.mention, avatar),
-        color       = cfg.FAV)
+        color       = cfg.SPB)
 
     if (avatar == (server_avatar:=user.display_avatar.url)):
         e.set_image(url = avatar)
@@ -89,7 +89,7 @@ async def send_banner_user(
     if (user.banner):
         e = discord.Embed(
             description = f"{user.mention}'s Banner\n\n> [URL]({user.banner.url})", 
-            color= cfg.FAV)
+            color= cfg.SPB)
         e.set_image(url=user.banner.url)
         await inter.response.send_message(embed=e)
     else:
@@ -108,7 +108,7 @@ async def send_user_info(
     
     embed = discord.Embed(
         description = "ID: **%s**\nStatus: **`%s %s`**" % (user.id, s_icon, status),
-        color       = cfg.FAV
+        color       = cfg.SPB
     ).set_footer(text="and other info: '/avatar', '/banner' | banner is User profile only!")
     embed.set_thumbnail(url = user.display_avatar)
 
@@ -145,7 +145,7 @@ async def send_server_info(inter:discord.Interaction):
         
     embed= discord.Embed(
         title = guild.name,
-        color = cfg.NOC
+        color = cfg.SPB
     ).set_footer(text = "S = Static, A = Animated")
 
     embed.add_field(name = "Owner", value = guild.owner.mention)
