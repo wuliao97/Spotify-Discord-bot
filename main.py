@@ -54,7 +54,7 @@ async def about(inter:discord.Interaction):
         description = "For All of Spotify Lover and My friends!", 
         color       = cfg.SPB)
     embed.add_field(name= "Users"  ,value= "> Servers: **%s**\n> Members: **%s**" % (len(bot.guilds), sum([guild.member_count - 1 for guild in bot.guilds])))
-    embed.add_field(name= "Support",  value= f"> Deveroper: %s\n> Source: ~~[Github.com](%s)~~\n> Our server: ~~[gg./](%s)~~" % (user.mention, "https://github.com/Ennuilw/", "https://discord.gg/"))
+    embed.add_field(name= "Support",  value= f"> Deveroper: %s\n> Source: [Github.com](%s)\n> Our server: ~~[gg./](%s)~~" % (user.mention, "https://github.com/wuliao97/Spotify-Discord-bot", "https://discord.gg/"))
 
     await inter.response.send_message(embed=embed)
 
@@ -215,23 +215,23 @@ async def spotify_songs_search(interaction:discord.Interaction, *, keyword, limi
     result = sp.search(q=keyword, limit=limit if 20 >= limit else 20)
     sp_list = []
     for track in result['tracks']['items']:
-        song_url = track['external_urls']['spotify']
         song_title = track['name']
-        if "[" and "]" in song_title:song_title = song_title.translate(str.maketrans({"[":"(", "[":")"}))
-        if len(song_title) > 20:
-            song_title = str(song_title[:15] + "... ")
-        if len(track['album']['name']) > 15:repl_song_album = str(track['album']['name'][:15] + "...")
-        else:repl_song_album=track['album']['name']
-        sp_list.append(f"{cfg.SP_EMOJI} **[{song_title}]({song_url})** - **{track['artists'][0]['name']}** | {repl_song_album}")
-    message = "\n\n".join(sp_list)
 
+        song_title = song_title.translate(str.maketrans({"[" : "(", "[" : ")"})) if "[" or "]" in song_title else song_title
+        song_title = str(song_title[:15] + "...") if len(song_title) > 15 else song_title
+        repl_song_album = str(track['album']['name'][:13] + "...") if len(track['album']['name']) > 13 else track['album']['name']
+    
+        sp_list.append(f"{cfg.SP_JUMP_E} **[{song_title}]({track['external_urls']['spotify']})** - **{track['artists'][0]['name']}** : {repl_song_album}")
+    
+    message = "\n\n".join(sp_list)
     keyword = __import__("urllib").parse.quote((str(keyword)))
     message += f"\n\n{cfg.SP_EMOJI} **[Jump to Spotify search engine](https://open.spotify.com/search/{keyword})**"
+
     await interaction.response.send_message(
         embed=discord.Embed(
             description= message, 
             color      = cfg.SPF
-    ).set_footer(text="Layout: *Title* - *Artists* | Album"))
+    ).set_footer(text="Layout: *Title* - *Artists* : Album"))
 
 
 @bot.slash_command(name="spotify-song-search-new", description="Now coding...")
