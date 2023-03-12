@@ -9,7 +9,7 @@ import discord_timestamps as dts
 from discord_timestamps.formats import TimestampType
 import os, re, io, sys,json
 import spotipy, logging, requests, datetime, asyncio
-import datetime as dt
+import datetime
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 
@@ -81,10 +81,14 @@ def spotify(interact:discord.Interaction, user:discord.Member):
         artists = material.artists
         artists = ", ".join(artists) if isinstance(artists, list) else material.artist
         artists = str(artists).translate(str.maketrans({"[":"", "]":"", "'":""}))
-
+        
         return True, material, artists
     else:
-        return False, discord.Embed(description=f"{user.mention} is not listening to Spotify!", color=cfg.SPF), None
+        return (
+            False, 
+            discord.Embed(description=f"{user.mention} is not listening to Spotify!", color=cfg.SPFW), 
+            None
+        )
 
 
 
@@ -94,19 +98,26 @@ def sand_symbol(literal, symble="*", count = 1):
 SS = sand_symbol
 
 def time_func(PLACE:str = "JST"):
-    data = dt.datetime.now()
-    data = dt.datetime.astimezone(dt.timezone(dt.timedelta(hours=+9))) if PLACE =="JST" else dt.datetime.utcnow()
+    data = datetime.datetime.now()
+    data = datetime.datetime.astimezone(datetime.timezone(datetime.timedelta(hours=+9))) if PLACE =="JST" else datetime.datetime.utcnow()
     return data.timestamp()
 
 
 
 def format_timestamp(timestamp,
-    time_s_type:TimestampType = TimestampType.SHORT_TIME,
-) -> str:
-
+    time_s_type:TimestampType = TimestampType.SHORT_TIME) -> str:
+        
     if isinstance(timestamp, int):
         int_timestamp = timestamp
     elif isinstance(timestamp, float):
         int_timestamp = int(timestamp)
 
     return f'<t:{int_timestamp}{time_s_type.value}>'
+
+
+
+def get_time(sec):
+    td = datetime.timedelta(seconds=sec)
+    m, s = divmod(td.seconds, 60)
+    h, m = divmod(m, 60)
+    return td.days, h, m, s
