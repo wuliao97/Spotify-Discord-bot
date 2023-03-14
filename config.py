@@ -1,6 +1,9 @@
 import os, json
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 
-with open(".\\config\\config.json") as f:
+
+with open(f".{os.sep}config{os.sep}config.json") as f:
     CFG = json.load(f)
 
 
@@ -18,7 +21,15 @@ ADMINS = CFG["ADMINS"]
 
 
 """Other"""
-NOC = 0x2f3136
-FAV = 0x6dc1d1
-SPF = 0x1DB954
-SPB = 191414
+NOC  = 0x2f3136
+FAV  = 0x6dc1d1
+FAV2 = 191414
+
+SPFW = 0x1DB954
+SPFB = 0x191414
+
+
+sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
+    client_id     = SP_ID, 
+    client_secret = SP_SRC)
+)
